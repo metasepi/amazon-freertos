@@ -1,0 +1,13 @@
+#ifndef LIST_H
+#define LIST_H
+
+struct xLIST_ITEM
+{
+};
+typedef struct xLIST_ITEM ListItem_t;
+
+typedef struct xLIST
+{
+} List_t;
+
+#endif
