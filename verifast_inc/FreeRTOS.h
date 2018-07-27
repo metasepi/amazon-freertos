@@ -52,19 +52,38 @@ typedef struct {
 #define INCLUDE_xTaskGetCurrentTaskHandle 1
 #define configUSE_MUTEXES 0 /* xxx Should be 1 */
 #define INCLUDE_xTaskAbortDelay 1
+#define configGENERATE_RUN_TIME_STATS 1
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS 1
+#define configUSE_APPLICATION_TASK_TAG 0
+#define configUSE_IDLE_HOOK 0
+#define configUSE_TICK_HOOK 0
+#define configUSE_NEWLIB_REENTRANT 0 /* xxx Should be 1 */
+#define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
+#define configIDLE_SHOULD_YIELD 0
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define INCLUDE_uxTaskPriorityGet 1
+#define INCLUDE_vTaskDelayUntil 1
+#define INCLUDE_vTaskDelay 1
+#define INCLUDE_vTaskDelete 1
+#define INCLUDE_vTaskPrioritySet 1
 
 // lib/include/FreeRTOS.h
 #define configMAX_TASK_NAME_LEN 16
 #define configINITIAL_TICK_COUNT 0
 #define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 0
-#define configUSE_STATS_FORMATTING_FUNCTIONS 0
+#define configUSE_STATS_FORMATTING_FUNCTIONS 0 /* xxx Should be 1 */
 #define configSTACK_DEPTH_TYPE uint16_t
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 #define configSUPPORT_STATIC_ALLOCATION 1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
-#define configRECORD_STACK_HIGH_ADDRESS 0
+#define configRECORD_STACK_HIGH_ADDRESS 1
 #define INCLUDE_xTaskResumeFromISR 1
 #define INCLUDE_xTaskGetHandle 0
+#define configUSE_TIME_SLICING 1
+
+#define configASSERT( x )
+#define configASSERT_DEFINED 0
 
 typedef struct xSTATIC_TCB
 {
