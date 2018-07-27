@@ -40,5 +40,12 @@ typedef uint32_t TickType_t;
 #define configINITIAL_TICK_COUNT 0
 #define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 0
 #define configUSE_STATS_FORMATTING_FUNCTIONS 0
+#define configSTACK_DEPTH_TYPE uint16_t
+#define configSUPPORT_DYNAMIC_ALLOCATION 1
+#define configSUPPORT_STATIC_ALLOCATION 1
+
+typedef struct xSTATIC_TCB
+{
+} StaticTask_t;
 
 #endif /* INC_FREERTOS_H */
