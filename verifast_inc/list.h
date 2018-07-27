@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#define configLIST_VOLATILE
+
 struct xLIST_ITEM
 {
 };

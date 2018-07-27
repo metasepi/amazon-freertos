@@ -36,11 +36,22 @@ typedef struct {
 } xMPU_SETTINGS;
 
 #define portSTACK_GROWTH (-1)
+#define portCRITICAL_NESTING_IN_TCB 1
 
 // demos/espressif/esp32_devkitc_esp_wrover_kit/common/config_files/FreeRTOSConfig.h
 #define configUSE_PREEMPTION 1
 #define configMAX_PRIORITIES 7
 #define configUSE_16_BIT_TICKS 0
+#define configUSE_TRACE_FACILITY 0 /* xxx Should be 1 */
+#define configCHECK_FOR_STACK_OVERFLOW 0
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define INCLUDE_vTaskSuspend 0 /* xxx Should be 1 */
+#define INCLUDE_xTaskGetSchedulerState 1
+#define configUSE_TIMERS 1
+#define INCLUDE_xTaskGetIdleTaskHandle 1
+#define INCLUDE_xTaskGetCurrentTaskHandle 1
+#define configUSE_MUTEXES 0 /* xxx Should be 1 */
+#define INCLUDE_xTaskAbortDelay 1
 
 // lib/include/FreeRTOS.h
 #define configMAX_TASK_NAME_LEN 16
@@ -52,6 +63,8 @@ typedef struct {
 #define configSUPPORT_STATIC_ALLOCATION 1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configRECORD_STACK_HIGH_ADDRESS 0
+#define INCLUDE_xTaskResumeFromISR 1
+#define INCLUDE_xTaskGetHandle 0
 
 typedef struct xSTATIC_TCB
 {
