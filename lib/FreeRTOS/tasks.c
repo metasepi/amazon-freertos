@@ -746,6 +746,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
+	    //@ requires true;
+	    //@ ensures true;
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -780,7 +782,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 		StackType_t *pxStack;
 
 			/* Allocate space for the stack used by the task being created. */
-			pxStack = ( StackType_t * ) pvPortMalloc( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+			pxStack = ( StackType_t * ) pvPortMalloc( ( usStackDepth * sizeof( StackType_t ) ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 
 			if( pxStack != NULL )
 			{
@@ -839,6 +841,8 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
 									const MemoryRegion_t * const xRegions )
+    //@ requires true;
+    //@ ensures true;
 {
 StackType_t *pxTopOfStack;
 UBaseType_t x;
@@ -1036,6 +1040,8 @@ UBaseType_t x;
 /*-----------------------------------------------------------*/
 
 static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
+    //@ requires true;
+    //@ ensures true;
 {
 	/* Ensure interrupts don't access the task lists while the lists are being
 	updated. */

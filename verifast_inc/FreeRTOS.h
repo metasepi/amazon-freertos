@@ -3,11 +3,24 @@
 
 #include <stdint.h>
 
+#define pvPortMalloc malloc
+#define vPortFree free
+
 // lib/include/private/projdefs.h
 typedef void *TaskFunction_t( void *p );
 
 #define pdFALSE			( ( BaseType_t ) 0 )
 #define pdTRUE			( ( BaseType_t ) 1 )
+
+#define pdPASS			( pdTRUE )
+#define pdFAIL			( pdFALSE )
+#define errQUEUE_EMPTY	( ( BaseType_t ) 0 )
+#define errQUEUE_FULL	( ( BaseType_t ) 0 )
+
+/* FreeRTOS error definitions. */
+#define errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY	( -1 )
+#define errQUEUE_BLOCKED						( -4 )
+#define errQUEUE_YIELD							( -5 )
 
 // lib/FreeRTOS/portable/ThirdParty/GCC/Xtensa_ESP32/include/portmacro.h
 #define portCHAR		int8_t
