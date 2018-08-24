@@ -73,7 +73,7 @@ void vListInitialiseItem( ListItem_t * const pxItem )
 
 void vListInsertEnd( List_t * const pxList, ListItem_t * const pxNewListItem )
 {
-ListItem_t * const pxIndex = pxList->pxIndex;
+ListItem_t *pxIndex = pxList->pxIndex;
 
 	/* Only effective when configASSERT() is also defined, these tests may catch
 	the list data structures being overwritten in memory.  They will not catch
@@ -171,7 +171,7 @@ UBaseType_t uxListRemove( ListItem_t * const pxItemToRemove )
 {
 /* The list item knows which list it is in.  Obtain the list from the list
 item. */
-List_t * const pxList = ( List_t * ) pxItemToRemove->pvContainer;
+List_t *pxList = ( List_t * ) pxItemToRemove->pvContainer;
 
 	pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
 	pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
