@@ -349,11 +349,16 @@ typedef tskTCB TCB_t;
 /*@
 predicate TCB_t_pred(struct tskTaskControlBlock *tcb) =
     tcb->pxTopOfStack |-> _
+    &*& struct_xMPU_SETTINGS_padding(&tcb->xMPUSettings)
+    &*& struct_xLIST_ITEM_padding(&tcb->xStateListItem)
+    &*& struct_xLIST_ITEM_padding(&tcb->xEventListItem)
     &*& tcb->uxPriority |-> _
     &*& tcb->pxStack |-> ?stack
     &*& StackType_pred(stack, _)
+    &*& chars(tcb->pcTaskName, 16, _)
     &*& tcb->pxEndOfStack |-> _
     &*& tcb->uxCriticalNesting |-> _
+    &*& pointers(tcb->pvThreadLocalStoragePointers, 1, _)
     &*& tcb->ulRunTimeCounter |-> _
     &*& tcb->ucStaticallyAllocated |-> _
     &*& tcb->ucDelayAborted |-> _
