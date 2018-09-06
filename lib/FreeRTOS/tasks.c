@@ -863,8 +863,8 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
 									const MemoryRegion_t * const xRegions )
-    //@ requires true;
-    //@ ensures true;
+    //@ requires TCB_t_pred(pxNewTCB);
+    //@ ensures TCB_t_pred(pxNewTCB);
 {
 StackType_t *pxTopOfStack;
 UBaseType_t x;
@@ -883,11 +883,13 @@ UBaseType_t x;
 		uxPriority &= ~portPRIVILEGE_BIT;
 	#endif /* portUSING_MPU_WRAPPERS == 1 */
 
+	//@open TCB_t_pred(pxNewTCB);
+
 	/* Avoid dependency on memset() if it is not required. */
 	#if( tskSET_NEW_STACKS_TO_KNOWN_VALUE == 1 )
 	{
 		/* Fill the stack with a known value to assist debugging. */
-		memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) ulStackDepth * sizeof( StackType_t ) );
+		( void ) memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) ulStackDepth * sizeof( StackType_t ) );
 	}
 	#endif /* tskSET_NEW_STACKS_TO_KNOWN_VALUE */
 

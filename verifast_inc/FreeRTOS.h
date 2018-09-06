@@ -64,7 +64,7 @@ typedef struct {
 #define configUSE_16_BIT_TICKS 0
 #define configUSE_TRACE_FACILITY 0 /* xxx Should be 1 */
 #define configCHECK_FOR_STACK_OVERFLOW 0
-#define INCLUDE_uxTaskGetStackHighWaterMark 1
+#define INCLUDE_uxTaskGetStackHighWaterMark 0
 #define INCLUDE_vTaskSuspend 0 /* xxx Should be 1 */
 #define INCLUDE_xTaskGetSchedulerState 1
 #define configUSE_TIMERS 1
@@ -81,7 +81,6 @@ typedef struct {
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
 #define configIDLE_SHOULD_YIELD 0
 #define configUSE_STATS_FORMATTING_FUNCTIONS 1
-#define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_uxTaskPriorityGet 1
 #define INCLUDE_vTaskDelayUntil 1
 #define INCLUDE_vTaskDelay 1
