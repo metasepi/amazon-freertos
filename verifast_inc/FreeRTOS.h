@@ -33,6 +33,13 @@ typedef void *TaskFunction_t( void *p );
 #define portUSING_MPU_WRAPPERS 1
 
 typedef portSTACK_TYPE			StackType_t;
+
+/*@
+predicate StackType_pred(uint8_t *array, int size) =
+    uchars(array, size, _)
+    &*& malloc_block_uchars(array, size);
+@*/
+
 typedef portBASE_TYPE			BaseType_t;
 typedef unsigned portBASE_TYPE	UBaseType_t;
 

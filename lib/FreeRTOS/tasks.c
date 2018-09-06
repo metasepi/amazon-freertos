@@ -346,6 +346,20 @@ typedef struct tskTaskControlBlock
 below to enable the use of older kernel aware debuggers. */
 typedef tskTCB TCB_t;
 
+/*@
+predicate TCB_t_pred(struct tskTaskControlBlock *tcb) =
+    tcb->pxTopOfStack |-> _
+    &*& tcb->uxPriority |-> _
+    &*& tcb->pxStack |-> ?stack
+    &*& StackType_pred(stack, _)
+    &*& tcb->pxEndOfStack |-> _
+    &*& tcb->uxCriticalNesting |-> _
+    &*& tcb->ulRunTimeCounter |-> _
+    &*& tcb->ucStaticallyAllocated |-> _
+    &*& tcb->ucDelayAborted |-> _
+    &*& malloc_block_tskTaskControlBlock(tcb);
+@*/
+
 /*lint -save -e956 A manual analysis and inspection has been used to determine
 which static variables must be declared volatile. */
 
@@ -786,6 +800,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 
 			if( pxStack != NULL )
 			{
+				//@ close StackType_pred(pxStack, usStackDepth);
 				/* Allocate space for the TCB. */
 				pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) ); /*lint !e961 MISRA exception as the casts are only redundant for some paths. */
 
@@ -796,6 +811,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 				}
 				else
 				{
+					//@ open StackType_pred(pxStack, _);
 					/* The stack cannot be used as the TCB was not created.  Free
 					it again. */
 					vPortFree( pxStack );
@@ -818,6 +834,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 			}
 			#endif /* configSUPPORT_STATIC_ALLOCATION */
 
+			//@ close TCB_t_pred(pxNewTCB);
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );
 			xReturn = pdPASS;
