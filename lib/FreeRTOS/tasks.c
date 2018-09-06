@@ -1062,7 +1062,7 @@ UBaseType_t x;
 /*-----------------------------------------------------------*/
 
 static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
-    //@ requires true;
+    //@ requires TCB_t_pred(pxNewTCB);
     //@ ensures true;
 {
 	/* Ensure interrupts don't access the task lists while the lists are being
