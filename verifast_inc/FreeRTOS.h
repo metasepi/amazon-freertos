@@ -105,6 +105,8 @@ typedef struct {
 #define configASSERT( x )
 #define configASSERT_DEFINED 0
 
+#define portPRIVILEGE_BIT ( ( UBaseType_t ) 0x00 )
+
 typedef struct xSTATIC_TCB
 {
 } StaticTask_t;

@@ -887,7 +887,7 @@ UBaseType_t x;
 	#if( tskSET_NEW_STACKS_TO_KNOWN_VALUE == 1 )
 	{
 		/* Fill the stack with a known value to assist debugging. */
-		( void ) memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) ulStackDepth * sizeof( StackType_t ) );
+		memset( pxNewTCB->pxStack, ( int ) tskSTACK_FILL_BYTE, ( size_t ) ulStackDepth * sizeof( StackType_t ) );
 	}
 	#endif /* tskSET_NEW_STACKS_TO_KNOWN_VALUE */
 
