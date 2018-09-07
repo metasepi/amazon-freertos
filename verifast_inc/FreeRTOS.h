@@ -87,6 +87,10 @@ typedef uint32_t TickType_t;
 // portBYTE_ALIGNMENT=4
 #define portBYTE_ALIGNMENT_MASK	( 0x0003 )
 
+StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t pxCode, void *pvParameters );
+    //@ requires true;
+    //@ ensures true;
+
 // lib/include/FreeRTOS.h
 #define configMAX_TASK_NAME_LEN 16
 #define configINITIAL_TICK_COUNT 0
@@ -106,6 +110,7 @@ typedef uint32_t TickType_t;
 
 #define portPRIVILEGE_BIT ( ( UBaseType_t ) 0x00 )
 #define portPOINTER_SIZE_TYPE uint32_t
+#define mtCOVERAGE_TEST_MARKER()
 
 typedef struct xSTATIC_TCB
 {

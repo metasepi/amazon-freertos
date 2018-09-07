@@ -767,8 +767,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
-	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _);
-	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _);
+	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _);
+	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _);
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -865,8 +865,8 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
 									const MemoryRegion_t * const xRegions )
-    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB);
-    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB);
+    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB) &*& pointer(pxCreatedTask, _);
+    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB) &*& pointer(pxCreatedTask, _);
 {
 StackType_t *pxTopOfStack;
 UBaseType_t x;
@@ -930,7 +930,7 @@ UBaseType_t x;
 
 	/* Store the task name in the TCB. */
 	for( x = ( UBaseType_t ) 0; x < ( UBaseType_t ) configMAX_TASK_NAME_LEN; x++ )
-	    //@ invariant 0 <= x &*& x < configMAX_TASK_NAME_LEN &*& chars(pxNewTCB->pcTaskName, configMAX_TASK_NAME_LEN, _) &*& chars(pcName, configMAX_TASK_NAME_LEN, _);
+	    //@ invariant chars(pxNewTCB->pcTaskName, configMAX_TASK_NAME_LEN, _) &*& chars(pcName, configMAX_TASK_NAME_LEN, _);
 	{
 		pxNewTCB->pcTaskName[ x ] = pcName[ x ];
 
@@ -1063,6 +1063,7 @@ UBaseType_t x;
 	{
 		mtCOVERAGE_TEST_MARKER();
 	}
+	//@close TCB_t_pred(pxNewTCB);
 }
 /*-----------------------------------------------------------*/
 
