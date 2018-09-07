@@ -87,6 +87,10 @@ typedef struct {
 #define INCLUDE_vTaskDelete 1
 #define INCLUDE_vTaskPrioritySet 1
 
+// lib/include/private/portable.h
+// portBYTE_ALIGNMENT=4
+#define portBYTE_ALIGNMENT_MASK	( 0x0003 )
+
 // lib/include/FreeRTOS.h
 #define configMAX_TASK_NAME_LEN 16
 #define configINITIAL_TICK_COUNT 0
@@ -105,6 +109,7 @@ typedef struct {
 #define configASSERT_DEFINED 0
 
 #define portPRIVILEGE_BIT ( ( UBaseType_t ) 0x00 )
+#define portPOINTER_SIZE_TYPE uint32_t
 
 typedef struct xSTATIC_TCB
 {

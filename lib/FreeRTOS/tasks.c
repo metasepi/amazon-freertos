@@ -355,7 +355,7 @@ predicate TCB_t_pred(struct tskTaskControlBlock *tcb) =
     &*& tcb->uxPriority |-> _
     &*& tcb->pxStack |-> ?stack
     &*& StackType_pred(stack, _)
-    &*& chars(tcb->pcTaskName, 16, _)
+    &*& chars(tcb->pcTaskName, configMAX_TASK_NAME_LEN, _)
     &*& tcb->pxEndOfStack |-> _
     &*& tcb->uxCriticalNesting |-> _
     &*& pointers(tcb->pvThreadLocalStoragePointers, 1, _)
@@ -765,8 +765,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
-	    //@ requires true;
-	    //@ ensures true;
+	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _);
+	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _);
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -863,8 +863,8 @@ static void prvInitialiseNewTask( 	TaskFunction_t pxTaskCode,
 									TaskHandle_t * const pxCreatedTask,
 									TCB_t *pxNewTCB,
 									const MemoryRegion_t * const xRegions )
-    //@ requires TCB_t_pred(pxNewTCB);
-    //@ ensures TCB_t_pred(pxNewTCB);
+    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB);
+    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& TCB_t_pred(pxNewTCB);
 {
 StackType_t *pxTopOfStack;
 UBaseType_t x;
@@ -899,7 +899,7 @@ UBaseType_t x;
 	by the port. */
 	#if( portSTACK_GROWTH < 0 )
 	{
-		pxTopOfStack = pxNewTCB->pxStack + ( ulStackDepth - ( uint32_t ) 1 );
+		pxTopOfStack = pxNewTCB->pxStack + ( (int32_t) ulStackDepth - 1 );
 		pxTopOfStack = ( StackType_t * ) ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack ) & ( ~( ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) ) ); /*lint !e923 MISRA exception.  Avoiding casts between pointers and integers is not practical.  Size differences accounted for using portPOINTER_SIZE_TYPE type. */
 
 		/* Check the alignment of the calculated top of stack is correct. */
@@ -928,6 +928,7 @@ UBaseType_t x;
 
 	/* Store the task name in the TCB. */
 	for( x = ( UBaseType_t ) 0; x < ( UBaseType_t ) configMAX_TASK_NAME_LEN; x++ )
+	    //@ invariant 0 < configMAX_TASK_NAME_LEN &*& chars(pxNewTCB->pcTaskName, configMAX_TASK_NAME_LEN, _) &*& chars(pcName, configMAX_TASK_NAME_LEN, _);
 	{
 		pxNewTCB->pcTaskName[ x ] = pcName[ x ];
 
