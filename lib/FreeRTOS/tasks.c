@@ -349,16 +349,18 @@ typedef tskTCB TCB_t;
 /*@
 predicate TCB_t_pred(struct tskTaskControlBlock *tcb) =
     tcb->pxTopOfStack |-> _
-    &*& struct_xMPU_SETTINGS_padding(&tcb->xMPUSettings)
     &*& struct_xLIST_ITEM_padding(&tcb->xStateListItem)
+    &*& xLIST_ITEM_xItemValue(&tcb->xStateListItem, _)
+    &*& xLIST_ITEM_pvOwner(&tcb->xStateListItem, _)
     &*& struct_xLIST_ITEM_padding(&tcb->xEventListItem)
+    &*& xLIST_ITEM_xItemValue(&tcb->xEventListItem, _)
+    &*& xLIST_ITEM_pvOwner(&tcb->xEventListItem, _)
     &*& tcb->uxPriority |-> _
     &*& tcb->pxStack |-> ?stack
     &*& StackType_pred(stack, _)
     &*& chars(tcb->pcTaskName, configMAX_TASK_NAME_LEN, _)
     &*& tcb->pxEndOfStack |-> _
     &*& tcb->uxCriticalNesting |-> _
-    &*& pointers(tcb->pvThreadLocalStoragePointers, 1, _)
     &*& tcb->ulRunTimeCounter |-> _
     &*& tcb->ucStaticallyAllocated |-> _
     &*& tcb->ucDelayAborted |-> _
@@ -928,7 +930,7 @@ UBaseType_t x;
 
 	/* Store the task name in the TCB. */
 	for( x = ( UBaseType_t ) 0; x < ( UBaseType_t ) configMAX_TASK_NAME_LEN; x++ )
-	    //@ invariant 0 < configMAX_TASK_NAME_LEN &*& chars(pxNewTCB->pcTaskName, configMAX_TASK_NAME_LEN, _) &*& chars(pcName, configMAX_TASK_NAME_LEN, _);
+	    //@ invariant 0 <= x &*& x < configMAX_TASK_NAME_LEN &*& chars(pxNewTCB->pcTaskName, configMAX_TASK_NAME_LEN, _) &*& chars(pcName, configMAX_TASK_NAME_LEN, _);
 	{
 		pxNewTCB->pcTaskName[ x ] = pcName[ x ];
 
@@ -1004,7 +1006,7 @@ UBaseType_t x;
 	#else
 	{
 		/* Avoid compiler warning about unreferenced parameter. */
-		( void ) xRegions;
+		xRegions;
 	}
 	#endif
 
@@ -1613,7 +1615,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
 				being used for anything else. */
 				if( ( listGET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ) ) & taskEVENT_LIST_ITEM_VALUE_IN_USE ) == 0UL )
 				{
-					listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), ( ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) uxNewPriority ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+					listSET_LIST_ITEM_VALUE( &( pxTCB->xEventListItem ), ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) uxNewPriority ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 				}
 				else
 				{
@@ -4489,7 +4491,7 @@ TickType_t uxReturn;
 
 	/* Reset the event list item to its normal value - so it can be used with
 	queues and semaphores. */
-	listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xEventListItem ), ( ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) pxCurrentTCB->uxPriority ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+	listSET_LIST_ITEM_VALUE( &( pxCurrentTCB->xEventListItem ), ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) pxCurrentTCB->uxPriority ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 
 	return uxReturn;
 }

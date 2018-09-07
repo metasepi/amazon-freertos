@@ -9,8 +9,8 @@
 // lib/include/private/projdefs.h
 typedef void *TaskFunction_t( void *p );
 
-#define pdFALSE			( ( BaseType_t ) 0 )
-#define pdTRUE			( ( BaseType_t ) 1 )
+#define pdFALSE			( 0 )
+#define pdTRUE			( 1 )
 
 #define pdPASS			( pdTRUE )
 #define pdFAIL			( pdFALSE )
@@ -30,7 +30,7 @@ typedef void *TaskFunction_t( void *p );
 #define portSHORT		int16_t
 #define portSTACK_TYPE	uint8_t
 #define portBASE_TYPE	int
-#define portUSING_MPU_WRAPPERS 1
+#define portUSING_MPU_WRAPPERS 0
 
 typedef portSTACK_TYPE			StackType_t;
 
@@ -51,10 +51,6 @@ typedef uint32_t TickType_t;
 
 #define PRIVILEGED_FUNCTION
 #define PRIVILEGED_DATA
-
-typedef struct {
-} xMPU_SETTINGS;
-
 #define portSTACK_GROWTH (-1)
 #define portCRITICAL_NESTING_IN_TCB 1
 
@@ -73,7 +69,7 @@ typedef struct {
 #define configUSE_MUTEXES 0 /* xxx Should be 1 */
 #define INCLUDE_xTaskAbortDelay 1
 #define configGENERATE_RUN_TIME_STATS 1
-#define configNUM_THREAD_LOCAL_STORAGE_POINTERS 1
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS 0
 #define configUSE_APPLICATION_TASK_TAG 0
 #define configUSE_IDLE_HOOK 0
 #define configUSE_TICK_HOOK 0
