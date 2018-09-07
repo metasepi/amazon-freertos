@@ -767,8 +767,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
-	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _);
-	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _);
+	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
+	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -1068,8 +1068,8 @@ UBaseType_t x;
 /*-----------------------------------------------------------*/
 
 static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
-    //@ requires TCB_t_pred(pxNewTCB);
-    //@ ensures true;
+    //@ requires u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _) &*& TCB_t_pred(pxNewTCB);
+    //@ ensures u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
 {
 	/* Ensure interrupts don't access the task lists while the lists are being
 	updated. */
@@ -1126,7 +1126,9 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
 		#endif /* configUSE_TRACE_FACILITY */
 		traceTASK_CREATE( pxNewTCB );
 
+		//@open TCB_t_pred(pxNewTCB);
 		prvAddTaskToReadyList( pxNewTCB );
+		//@close TCB_t_pred(pxNewTCB);
 
 		portSETUP_TCB( pxNewTCB );
 	}
@@ -3539,6 +3541,8 @@ static portTASK_FUNCTION( prvIdleTask, pvParameters )
 /*-----------------------------------------------------------*/
 
 static void prvInitialiseTaskLists( void )
+    //@ requires true;
+    //@ ensures true;
 {
 UBaseType_t uxPriority;
 

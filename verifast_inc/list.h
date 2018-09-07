@@ -24,4 +24,8 @@ void vListInitialiseItem( ListItem_t * const pxItem );
     //@ requires true;
     //@ ensures true;
 
+void vListInsertEnd( List_t * const pxList, ListItem_t * const pxNewListItem );
+    //@ requires true;
+    //@ ensures true;
+
 #endif

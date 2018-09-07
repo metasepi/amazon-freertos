@@ -19,4 +19,16 @@ typedef struct xTASK_PARAMETERS
 
 #define tskIDLE_PRIORITY			( ( UBaseType_t ) 0U )
 
+#define taskYIELD()
+
+#define taskENTER_CRITICAL()
+#define taskENTER_CRITICAL_FROM_ISR()
+
+#define taskEXIT_CRITICAL()
+#define taskEXIT_CRITICAL_FROM_ISR( x )
+
+#define taskDISABLE_INTERRUPTS()
+
+#define taskENABLE_INTERRUPTS()
+
 #endif /* INC_TASK_H */
