@@ -767,8 +767,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
-	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
-	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
+	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _;
+	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _;
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -1068,8 +1068,8 @@ UBaseType_t x;
 /*-----------------------------------------------------------*/
 
 static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
-    //@ requires u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _) &*& TCB_t_pred(pxNewTCB);
-    //@ ensures u_integer(&uxCurrentNumberOfTasks, _) &*& pointer(&pxCurrentTCB, _) &*& u_integer(&uxTaskNumber, _) &*& u_integer(&uxTopReadyPriority, _);
+    //@ requires uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& TCB_t_pred(pxNewTCB);
+    //@ ensures uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _;
 {
 	/* Ensure interrupts don't access the task lists while the lists are being
 	updated. */
