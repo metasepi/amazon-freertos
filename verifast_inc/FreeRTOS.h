@@ -112,6 +112,8 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 #define portPOINTER_SIZE_TYPE uint32_t
 #define mtCOVERAGE_TEST_MARKER()
 
+#define portSETUP_TCB( pxTCB )
+
 #define traceSTART()
 #define traceEND()
 #define traceTASK_SWITCHED_IN()
