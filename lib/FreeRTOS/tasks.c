@@ -350,11 +350,11 @@ typedef tskTCB TCB_t;
 predicate TCB_t_pred(struct tskTaskControlBlock *tcb) =
     tcb->pxTopOfStack |-> _
     &*& struct_xLIST_ITEM_padding(&tcb->xStateListItem)
-    &*& xLIST_ITEM_xItemValue(&tcb->xStateListItem, _)
-    &*& xLIST_ITEM_pvOwner(&tcb->xStateListItem, _)
+    &*& tcb->xStateListItem.xItemValue |-> _
+    &*& tcb->xStateListItem.pvOwner |-> _
     &*& struct_xLIST_ITEM_padding(&tcb->xEventListItem)
-    &*& xLIST_ITEM_xItemValue(&tcb->xEventListItem, _)
-    &*& xLIST_ITEM_pvOwner(&tcb->xEventListItem, _)
+    &*& tcb->xEventListItem.xItemValue |-> _
+    &*& tcb->xEventListItem.pvOwner |-> _
     &*& tcb->uxPriority |-> _
     &*& tcb->pxStack |-> ?stack
     &*& StackType_pred(stack, _)
