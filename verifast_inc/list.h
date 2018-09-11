@@ -14,7 +14,19 @@ typedef struct xLIST_ITEM ListItem_t;
 
 typedef struct xLIST
 {
+	int dummy;
 } List_t;
+
+/*@
+predicate xLIST(struct xLIST *p) =
+    p->dummy |-> _;
+
+predicate xLISTs(struct xLIST *p, int count) =
+    count == 0 ?
+        emp
+    :
+        xLIST(p) &*& xLISTs(p + 1, count - 1);
+@*/
 
 #define listSET_LIST_ITEM_OWNER( pxListItem, pxOwner )		( ( pxListItem )->pvOwner = ( void * ) ( pxOwner ) )
 

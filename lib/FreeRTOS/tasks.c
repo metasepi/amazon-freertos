@@ -767,8 +767,8 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 							void * const pvParameters,
 							UBaseType_t uxPriority,
 							TaskHandle_t * const pxCreatedTask )
-	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _;
-	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _;
+	    //@ requires chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _ &*& xLISTs(pxReadyTasksLists, configMAX_PRIORITIES);
+	    //@ ensures chars(pcName, configMAX_TASK_NAME_LEN, _) &*& pointer(pxCreatedTask, _) &*&  uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _ &*& xLISTs(pxReadyTasksLists, configMAX_PRIORITIES);
 	{
 	TCB_t *pxNewTCB;
 	BaseType_t xReturn;
@@ -1068,8 +1068,8 @@ UBaseType_t x;
 /*-----------------------------------------------------------*/
 
 static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
-    //@ requires uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _ &*& TCB_t_pred(pxNewTCB);
-    //@ ensures uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _;
+    //@ requires uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _ &*& xLISTs(pxReadyTasksLists, configMAX_PRIORITIES) &*& TCB_t_pred(pxNewTCB);
+    //@ ensures uxCurrentNumberOfTasks |-> _ &*& pxCurrentTCB |-> _ &*& uxTaskNumber |-> _ &*& uxTopReadyPriority |-> _ &*& xSchedulerRunning |-> _ &*& xLISTs(pxReadyTasksLists, configMAX_PRIORITIES);
 {
 	/* Ensure interrupts don't access the task lists while the lists are being
 	updated. */
